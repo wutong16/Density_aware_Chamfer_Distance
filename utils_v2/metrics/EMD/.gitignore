@@ -1,0 +1,4 @@
+/build/*
+/emd.egg-info/*
+/dist/*
+/__pycache__/*
