@@ -1,0 +1,5 @@
+h5py==2.10.0
+matplotlib==3.0.3
+munch==2.5.0
+open3d==0.9.0
+PyYAML==5.3.1
