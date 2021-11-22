@@ -1,19 +1,5 @@
 # Density-aware Chamfer Distance
 
-### Todo
-- [x] change the name of parameters (T -> alpha).
-- [x] check the category name and number
-- [x] loss print ("loss outlier")
-- [x] maybe remove the test file and leave only train with --test_only
-- [x] some args (e.g., flag) 
-- [x] up-sampling
-- [x] modify the data path [here]()
-- [x] test vrc_dcd pre-trained model
-- [x] add pytorch 1.5 implementation
-- [x] batch size
-- [x] remove simple_eval
-- [x] setup (main setup and >1.5 instruction)
-
 This repository contains the official PyTorch implementation of our [paper](): 
 
 *Density-aware Chamfer Distance as a Comprehensive Metric for Point Cloud Completion, NeurIPS 2021*
