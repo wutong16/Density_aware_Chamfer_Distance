@@ -38,10 +38,16 @@ We use the [MVP Dataset](https://mvp-dataset.github.io/). Please download the [t
 ### Density-aware Chamfer Distance
 The function for **DCD** calculation is defined in `def calc_dcd()` in `utils/model_utils.py`.
 
-Users with a higher PyTorch version may try `def calc_dcd()` in `utils_v2/model_utils.py`, which has been tested on PyTorch 1.6.0 .
+Users of higher PyTorch versions may try `def calc_dcd()` in `utils_v2/model_utils.py`, which has been tested on PyTorch 1.6.0 .
 ### Model training and evaluation
-  + To train a model: run `python train.py ./cfgs/*.yaml`, e.g. `python train.py ./cfgs/vrc_plus.yaml`
-  + To test a model: run `python train.py ./cfgs/*.yaml --test_only`, e.g. `python train.py ./cfgs/vrc_plus_eval.yaml --test_only`
+  + To train a model: run `python train.py ./cfgs/*.yaml`, for example:
+```
+python train.py ./cfgs/vrc_plus.yaml
+```
+  + To test a model: run `python train.py ./cfgs/*.yaml --test_only`, for example:
+```
+python train.py ./cfgs/vrc_plus_eval.yaml --test_only
+```
   + Config for each algorithm can be found in `cfgs/`.
   + `run_train.sh` and `run_test.sh` are provided for SLURM users. 
 
@@ -60,7 +66,6 @@ We empirically find that using [DP](https://pytorch.org/docs/stable/generated/to
 ### Pre-trained models
 We provide the [pre-trained model](https://drive.google.com/file/d/1WQFgxFQj3a-SkDaViCk3VqBE9Y_uZysG/view?usp=sharing) that reproduce the results in our paper.
 Download and extract it to the `./log/pretrained/` directory, and then evaluate it with `cfgs/vrc_plus_eval.yaml`. The setting `prob_sample: True` turns on the guided down-sampling.
-
 We also provide the model for VRCNet trained with DCD loss [here](https://drive.google.com/file/d/16s-FBNn1tYT7-_n2BVKb5MQy8dB9tcZF/view?usp=sharing). 
 
 ## Citation
