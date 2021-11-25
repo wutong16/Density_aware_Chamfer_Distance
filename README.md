@@ -1,6 +1,6 @@
 # Density-aware Chamfer Distance
 
-This repository contains the official PyTorch implementation of our [paper](https://openreview.net/pdf?id=0lz4QxW2tDf): 
+This repository contains the official PyTorch implementation of our [paper](https://arxiv.org/abs/2111.12702): 
 
 *Density-aware Chamfer Distance as a Comprehensive Metric for Point Cloud Completion, NeurIPS 2021*
 
