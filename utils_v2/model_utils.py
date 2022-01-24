@@ -1,11 +1,13 @@
-import torch
 import math
 import os
 import sys
+
+import numpy as np
+import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import numpy as np
-from metrics import cd, fscore, emd
+
+from .metrics import cd, emd, fscore
 
 
 def calc_dcd(x, gt, alpha=1000, n_lambda=1, return_raw=False, non_reg=False):
@@ -28,21 +30,18 @@ def calc_dcd(x, gt, alpha=1000, n_lambda=1, return_raw=False, non_reg=False):
     # dist2 and idx2: vice versa
     exp_dist1, exp_dist2 = torch.exp(-dist1 * alpha), torch.exp(-dist2 * alpha)
 
-    loss1 = []
-    loss2 = []
-    for b in range(batch_size):
-        count1 = torch.bincount(idx1[b])
-        weight1 = count1[idx1[b].long()].float().detach() ** n_lambda
-        weight1 = (weight1 + 1e-6) ** (-1) * frac_21
-        loss1.append((- exp_dist1[b] * weight1 + 1.).mean())
+    count1 = torch.zeros_like(idx2)
+    count1.scatter_add_(1, idx1.long(), torch.ones_like(idx1))
+    weight1 = count1.gather(1, idx1.long()).float().detach() ** n_lambda
+    weight1 = (weight1 + 1e-6) ** (-1) * frac_21
+    loss1 = (1 - exp_dist1 * weight1).mean(dim=1)
 
-        count2 = torch.bincount(idx2[b])
-        weight2 = count2[idx2[b].long()].float().detach() ** n_lambda
-        weight2 = (weight2 + 1e-6) ** (-1) * frac_12
-        loss2.append((- exp_dist2[b] * weight2 + 1.).mean())
+    count2 = torch.zeros_like(idx1)
+    count2.scatter_add_(1, idx2.long(), torch.ones_like(idx2))
+    weight2 = count2.gather(1, idx2.long()).float().detach() ** n_lambda
+    weight2 = (weight2 + 1e-6) ** (-1) * frac_12
+    loss2 = (1 - exp_dist2 * weight2).mean(dim=1)
 
-    loss1 = torch.stack(loss1)
-    loss2 = torch.stack(loss2)
     loss = (loss1 + loss2) / 2
 
     res = [loss, cd_p, cd_t]
